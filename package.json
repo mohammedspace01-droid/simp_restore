@@ -1,0 +1,83 @@
+{
+  "name": "simprestore",
+  "version": "0.2.3",
+  "description": "Offline SimpMusic backup recovery, incremental music library, and local audio player for Windows",
+  "author": "Mohammed Hamed",
+  "license": "MIT",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "prepare:tools": "node scripts/prepare-tools.js",
+    "dist:win": "npm run prepare:tools && electron-builder --win nsis portable",
+    "dist:portable": "npm run prepare:tools && electron-builder --win portable"
+  },
+  "dependencies": {
+    "ffmpeg-static": "5.2.0",
+    "music-metadata": "12.2.1",
+    "sql.js": "1.13.0",
+    "yauzl": "3.4.0"
+  },
+  "devDependencies": {
+    "electron": "44.7.2",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.mohammedhamed.simprestore",
+    "productName": "SimpRestore",
+    "artifactName": "SimpRestore-${version}-${arch}.${ext}",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "README.md",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md",
+      "CHANGELOG.md"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor/exoprobe",
+        "to": "exoprobe"
+      },
+      {
+        "from": "vendor/ffmpeg.exe",
+        "to": "ffmpeg.exe"
+      },
+      {
+        "from": "vendor/FFMPEG-LICENSE.txt",
+        "to": "FFMPEG-LICENSE.txt"
+      },
+      {
+        "from": "vendor/FFMPEG-BUILD-INFO.txt",
+        "to": "FFMPEG-BUILD-INFO.txt"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/app.ico",
+      "requestedExecutionLevel": "asInvoker",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SimpRestore",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "SimpRestore-Portable-${version}-${arch}.${ext}"
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

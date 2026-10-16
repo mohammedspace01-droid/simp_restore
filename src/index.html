@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file: data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data: blob:; media-src 'self' file: blob:; connect-src 'self' file:;" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SimpRestore — Your music, restored</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark"><span class="brand-glyph">S</span><span class="brand-spark"></span></div>
+        <div class="brand-copy"><strong>SimpRestore</strong><small>OFFLINE MUSIC TOOLKIT</small></div>
+      </div>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-page="home"><span class="nav-symbol">⌂</span><span>Overview</span><kbd>01</kbd></button>
+        <button class="nav-item" data-page="restore"><span class="nav-symbol">↥</span><span>Restore backup</span><kbd>02</kbd></button>
+        <button class="nav-item" data-page="library"><span class="nav-symbol">▤</span><span>Music library</span><kbd id="nav-count">0</kbd></button>
+        <button class="nav-item" data-page="player"><span class="nav-symbol">♫</span><span>Player</span><kbd>04</kbd></button>
+      </nav>
+      <div class="nav-label guide-label">SUPPORT</div>
+      <nav class="nav-list"><button class="nav-item" data-page="help"><span class="nav-symbol">ⓘ</span><span>Quick guide & ethics</span></button></nav>
+      <div class="sidebar-spacer"></div>
+      <div class="local-card">
+        <div class="local-icon"><span></span><span></span><span></span></div>
+        <div class="local-card-title">Your files stay yours</div>
+        <p>Backup recovery and library playback run on this computer. No upload, no account.</p>
+        <div class="local-status"><i></i> LOCAL PROCESSING</div>
+      </div>
+      <div class="creator-sidebar-card">
+        <span class="creator-sidebar-kicker">INDEPENDENT PROJECT</span>
+        <b>Mohammed Hamed</b>
+        <small>AI-assisted · Open source</small>
+        <div class="creator-sidebar-links">
+          <a href="https://www.linkedin.com/in/mohammed-hamed-2007-space/" id="sidebar-linkedin">LinkedIn ↗</a>
+          <a href="https://ko-fi.com/mohammed_hamed01" id="sidebar-kofi">Support ♥</a>
+        </div>
+      </div>
+      <div class="sidebar-footer"><span class="online-dot"></span><span>Offline-ready</span><span class="version" id="version-label">v0.2.2</span></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>SimpRestore</span><span class="crumb-slash">/</span><strong id="page-heading">Overview</strong></div>
+        <div class="topbar-right"><span class="offline-pill"><i></i> WORKS OFFLINE</span><button class="top-icon-button" id="open-library-folder" title="Open library folder" aria-label="Open library folder">↗</button><div class="user-chip"><span class="user-avatar">MH</span><span><b>Mohammed Hamed</b><small>Project creator</small></span></div></div>
+      </header>
+
+      <section class="page active" id="page-home">
+        <div class="hero-panel">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-star">✦</span> YOUR MUSIC. YOUR DEVICE.</div>
+            <h1>Bring your music<br /><span>back to life.</span></h1>
+            <p>Turn a SimpMusic backup into a clean, searchable local collection — restore track names, convert audio when possible, and add future backups without duplicating your library.</p>
+            <div class="hero-actions"><button class="button-primary" id="hero-start"><span>＋</span> Restore a backup</button><button class="button-secondary" id="hero-library">Explore library <span>↗</span></button></div>
+            <div class="hero-trust"><span><i>✓</i> 100% local processing</span><span><i>✓</i> Incremental imports</span><span><i>✓</i> No account required</span></div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="visual-glow"></div><div class="ring ring-outer"></div><div class="ring ring-inner"></div>
+            <div class="vinyl-disc"><div class="vinyl-grooves"></div><div class="vinyl-label"><span>SIMPRESTORE</span><b>SR</b><i></i></div></div>
+            <div class="float-card float-card-top"><span class="mini-wave">▂▅▇▃▆▂</span><span><b>Restore</b><small>Cache → tracks</small></span></div>
+            <div class="float-card float-card-bottom"><span class="check-orb">✓</span><span><b>Library protected</b><small>Duplicates skipped</small></span></div>
+            <div class="visual-caption"><span>LOCAL MUSIC</span><b>∞</b></div>
+          </div>
+        </div>
+
+        <div class="section-heading"><div><span class="section-kicker">YOUR COLLECTION</span><h2>Library at a glance</h2></div><span id="last-updated" class="last-updated">No restore run yet</span></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-icon purple">♫</div><div class="stat-label">Tracks in library</div><div class="stat-number" id="stat-tracks">0</div><div class="stat-note">Indexed local audio</div></article>
+          <article class="stat-card"><div class="stat-icon green">＋</div><div class="stat-label">Added last run</div><div class="stat-number" id="stat-added">—</div><div class="stat-note">New items only</div></article>
+          <article class="stat-card"><div class="stat-icon amber">↻</div><div class="stat-label">Duplicates skipped</div><div class="stat-number" id="stat-duplicates">—</div><div class="stat-note">Matched by media ID</div></article>
+          <article class="stat-card"><div class="stat-icon blue">⌁</div><div class="stat-label">Privacy status</div><div class="stat-number stat-word">On-device</div><div class="stat-note">No cloud processing</div></article>
+        </div>
+
+        <div class="home-grid">
+          <article class="panel quick-restore-card">
+            <div class="panel-heading"><div><span class="section-kicker">START HERE</span><h3>Restore a SimpMusic backup</h3></div><span class="feature-tag">INCREMENTAL</span></div>
+            <button class="backup-drop" id="home-drop-zone" type="button">
+              <span class="upload-orb"><span>↑</span></span><span class="drop-title" id="home-backup-name">Choose your .backup file</span><span class="drop-description">Drop a backup here or browse your computer</span><span class="browse-link">Browse files <b>↗</b></span>
+            </button>
+            <div class="home-path-row"><span class="folder-glyph">▱</span><div class="path-copy"><b>Music destination</b><small id="home-library-path">Choose where your collection should live</small></div><button class="small-action" id="home-choose-library">Choose folder</button></div>
+            <div class="storage-note" id="home-storage-note">Temporary recovery files use this drive too. Choose a drive with plenty of free space.</div>
+            <button class="button-primary wide" id="home-process" disabled>Start recovery <span>→</span></button>
+            <p class="subtle-note">Your original backup is never modified. Existing library files are not overwritten.</p>
+          </article>
+          <article class="panel how-it-works-card">
+            <div class="panel-heading"><div><span class="section-kicker">AUTOMATED WORKFLOW</span><h3>From backup to playlist</h3></div><span class="panel-counter">4 STEPS</span></div>
+            <div class="workflow-list">
+              <div class="workflow-step"><span class="workflow-number">01</span><div><b>Inspect & extract</b><p>Open the ZIP-compatible .backup safely with live progress.</p></div><span class="step-check">✓</span></div>
+              <div class="workflow-step"><span class="workflow-number">02</span><div><b>Rejoin EXO cache</b><p>Use Exoprobe and the ExoPlayer cache index.</p></div><span class="step-check">✓</span></div>
+              <div class="workflow-step"><span class="workflow-number">03</span><div><b>Restore metadata</b><p>Match media IDs with SimpMusic song titles and artists.</p></div><span class="step-check">✓</span></div>
+              <div class="workflow-step"><span class="workflow-number">04</span><div><b>Add only what’s new</b><p>Keep one growing library across later backups.</p></div><span class="step-check">✓</span></div>
+            </div>
+            <button class="guide-link" data-page="help">Read the setup guide <span>→</span></button>
+          </article>
+        </div>
+        <article class="panel recent-panel"><div class="panel-heading"><div><span class="section-kicker">RECENTLY ADDED</span><h3>Fresh from your library</h3></div><button class="text-link" data-page="library">View all tracks ↗</button></div><div id="recent-tracks" class="recent-list"><div class="empty-state compact-empty"><span class="empty-note">♫</span><b>Your library is waiting</b><small>Restore a backup or add an existing local music folder.</small></div></div></article>
+      </section>
+
+      <section class="page" id="page-restore">
+        <div class="page-title-row"><div><div class="eyebrow">BACKUP RESTORATION</div><h1>Restore your <span>collection.</span></h1><p>Choose the backup SimpMusic created. No need to rename .backup to .zip — SimpRestore handles it for you.</p></div><div class="title-badge"><span>01</span><span>BACKUP<br />IMPORT</span></div></div>
+        <div class="restore-grid">
+          <article class="panel restore-settings-panel">
+            <div class="panel-heading"><div><span class="section-kicker">SOURCE & DESTINATION</span><h3>Choose your files</h3></div><span class="step-pill">STEP 1 OF 2</span></div>
+            <button class="backup-drop large-drop" id="restore-drop-zone" type="button"><span class="upload-orb"><span>↑</span></span><span class="drop-title" id="restore-backup-name">Select SimpMusic backup</span><span class="drop-description">.backup or .zip · stays on your PC</span><span class="browse-link">Browse computer <b>↗</b></span></button>
+            <div class="setting-block"><div class="setting-heading"><span class="field-symbol">▱</span><span><b>Output library</b><small>Use this same folder for every future backup.</small></span></div><div class="folder-picker"><span class="folder-glyph">▱</span><span id="restore-library-path" class="folder-path">No destination selected</span><button id="restore-choose-library" class="small-action">Browse</button></div><div class="storage-note" id="restore-storage-note">Temporary extraction and Exoprobe output will use the same drive as this library — not Windows Temp on C:.</div></div>
+            <div class="option-box">
+              <label class="setting-check"><input type="checkbox" id="convert-mp3" checked><span class="fake-check"></span><span><b>Convert recoverable audio to MP3</b><small>Extracts the audio stream from video containers too.</small></span></label>
+              <label class="setting-check"><input type="checkbox" id="keep-originals"><span class="fake-check"></span><span><b>Keep recovered originals as well</b><small>Uses extra disk space; helpful for archiving.</small></span></label>
+            </div>
+            <button class="button-primary wide" id="restore-start" disabled>Start recovery <span>→</span></button>
+            <div class="safety-footnote"><span>⌑</span><span>Read-only source · no uploads · no existing files overwritten</span></div>
+          </article>
+          <article class="panel progress-panel">
+            <div class="panel-heading"><div><span class="section-kicker">LIVE STATUS</span><h3>Recovery progress</h3></div><span class="status-pill" id="process-status"><i></i> Ready</span></div>
+            <div class="progress-summary"><div class="progress-value" id="progress-number">0<span>%</span></div><div><b id="progress-title">Waiting for a backup</b><p id="progress-subtitle">Choose a backup and an output folder to begin.</p></div></div>
+            <div class="progress-track"><div id="progress-fill"></div><span class="progress-glint"></span></div>
+            <div class="stage-list"><div class="stage" data-stage="extract"><span>01</span><b>Extract archive</b><i></i></div><div class="stage" data-stage="scan"><span>02</span><b>Inspect cache</b><i></i></div><div class="stage" data-stage="rejoin"><span>03</span><b>Rejoin media</b><i></i></div><div class="stage" data-stage="export"><span>04</span><b>Build library</b><i></i></div></div>
+            <div class="log-heading"><b>Activity log</b><span>LOCAL PROCESS</span></div><div id="process-log" class="process-log"><div class="log-line"><span class="log-dot"></span><span>Ready when you are.</span><time>—</time></div></div>
+            <div id="result-summary" class="result-summary" hidden></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-library">
+        <div class="page-title-row"><div><div class="eyebrow">YOUR MUSIC, ORGANIZED</div><h1>Your <span>library.</span></h1><p id="library-subtitle">Browse restored songs and any local music folder you add.</p></div><div class="library-action-row"><button class="button-secondary" id="add-local-folder">＋ Add local folder</button><button class="button-icon-label" id="library-open-folder">↗ <span>Open folder</span></button></div></div>
+        <div class="library-summary-strip"><div class="library-summary-icon">♫</div><div><b id="library-title-count">0 tracks indexed</b><small>Search, sort, and play local audio files.</small></div><div class="library-summary-spacer"></div><span class="library-status"><i></i> Local library</span></div>
+        <div class="library-toolbar"><label class="search-field"><span>⌕</span><input id="search-tracks" type="search" placeholder="Search by title, artist or album…" autocomplete="off" /></label><div class="toolbar-right"><span id="library-count-label">0 tracks</span><select id="sort-tracks" aria-label="Sort tracks"><option value="added">Recently added</option><option value="title">Title A–Z</option><option value="artist">Artist A–Z</option></select></div></div>
+        <article class="panel track-table"><div class="track-table-head"><span>#</span><span>TRACK</span><span>FORMAT</span><span>ADDED</span><span></span></div><div id="track-list" class="track-list"><div class="empty-state"><div class="empty-disc">♫</div><h3>No tracks yet</h3><p>Restore a SimpMusic backup or add any existing local music folder.</p><button class="button-primary" data-page="restore">Restore backup</button></div></div></article>
+        <p class="library-footnote">Local folders are indexed in place — SimpRestore does not copy or move those files.</p>
+      </section>
+
+      <section class="page" id="page-player">
+        <div class="page-title-row"><div><div class="eyebrow">YOUR OFFLINE LISTENING ROOM</div><h1>Press <span>play.</span></h1><p>The built-in player works with your restored tracks and supported local audio files.</p></div><button class="button-secondary" id="player-add-folder">＋ Add local folder</button></div>
+        <div class="player-layout">
+          <article class="panel player-panel"><div class="player-ambient"></div><div class="player-topline"><span>NOW PLAYING</span><span class="player-sound-badge"><i></i> LOCAL AUDIO</span></div><div class="album-artwork" id="big-artwork"><div class="artwork-orbit orbit-a"></div><div class="artwork-orbit orbit-b"></div><div class="artwork-disc"><span>SR</span></div><div class="artwork-eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="now-playing-meta"><h2 id="big-title">Choose a track</h2><p id="big-artist">Your music will show up here.</p><small id="big-album">SIMPRESTORE LOCAL PLAYER</small></div><div class="player-timeline"><time id="elapsed">0:00</time><input type="range" min="0" max="1000" value="0" id="seek-bar" aria-label="Track progress"><time id="duration">0:00</time></div><div class="player-controls"><button class="round-control" id="shuffle-button" title="Shuffle">⤨</button><button class="round-control" id="previous-button" title="Previous track">|◀</button><button class="play-control" id="play-button" title="Play or pause">▶</button><button class="round-control" id="next-button" title="Next track">▶|</button><button class="round-control" id="repeat-button" title="Repeat mode">↻</button></div><div class="volume-row"><span>VOL</span><input id="volume-bar" type="range" min="0" max="100" value="80" aria-label="Volume"><span id="player-track-count">0 tracks</span></div><audio id="audio-player" preload="metadata"></audio><div id="playback-notice" class="playback-notice" hidden></div></article>
+          <article class="panel queue-panel"><div class="panel-heading"><div><span class="section-kicker">UP NEXT</span><h3>Play queue</h3></div><button class="text-link" id="queue-shuffle">Shuffle all ↻</button></div><div class="queue-description"><span class="queue-pulse"></span><span>Pick any track to start listening.</span></div><div id="queue-list" class="queue-list"><div class="empty-state compact-empty"><span class="empty-note">♫</span><b>Your queue is empty</b><small>Add music or restore a backup.</small></div></div></article>
+        </div>
+      </section>
+
+      <section class="page" id="page-help">
+        <div class="page-title-row"><div><div class="eyebrow">GET STARTED & USE RESPONSIBLY</div><h1>Simple by <span>design.</span></h1><p>Everything runs locally. Here is how to create the backup and what this project is — and is not — intended to do.</p></div></div>
+        <div class="guide-grid">
+          <article class="guide-card panel"><span class="guide-number">01</span><span class="guide-icon">▣</span><h3>Create a SimpMusic backup</h3><p>On your phone, open SimpMusic → <b>Settings</b> → scroll to <b>Backup</b> → choose <b>Backup Your Data / Save all your Playlist data</b>. Wording may vary by version.</p><div class="guide-tip">If available, enable <b>Backup downloaded data</b> so cached media is included.</div></article>
+          <article class="guide-card panel"><span class="guide-number">02</span><span class="guide-icon">⇧</span><h3>Move the backup to Windows</h3><p>Transfer the resulting <code>.backup</code> file by USB, LocalSend, or another method. Choose the file as-is; SimpRestore understands the ZIP-compatible archive.</p><div class="guide-tip">Do not rename individual EXO pieces or edit the original backup.</div></article>
+          <article class="guide-card panel"><span class="guide-number">03</span><span class="guide-icon">▱</span><h3>Choose one library folder</h3><p>Use the same destination every time. The local manifest identifies tracks that were already processed, so later backups can add new IDs without repeating the whole collection.</p><div class="guide-tip">Example: <code>D:\Music\SimpRestore Library</code></div></article>
+          <article class="guide-card panel"><span class="guide-number">04</span><span class="guide-icon">♫</span><h3>Restore and play</h3><p>Recovery rejoins available cache pieces, looks up track metadata, and optionally converts compatible media to MP3. You can also add any local music folder to the player.</p><div class="guide-tip">Missing or evicted cache pieces cannot be recreated from playlist metadata alone.</div></article>
+        </div>
+        <article class="ethics-card panel"><div class="ethics-symbol">!</div><div><span class="section-kicker">RESPONSIBLE & ETHICAL USE</span><h3>A recovery utility is not permission to copy music.</h3><p>SimpRestore is an independent, AI-assisted community tool for recovering personal backups and organizing local audio. The author does not encourage or authorize piracy, unauthorized downloading, or redistribution. Only recover, convert, or retain media you created, own, or have clear permission to access and keep. If you are unsure whether you have that permission, do not process or share that media. Respect artists, rights holders, applicable laws, and the terms of SimpMusic, YouTube Music, and other services. You are responsible for your own use; this notice is not a legal guarantee or a substitute for your own ethical judgement. SimpRestore is not affiliated with or endorsed by SimpMusic, YouTube, or YouTube Music.</p><label class="ethics-check"><input id="ethics-inline-check" type="checkbox"><span class="fake-check"></span><span>I understand and will only use SimpRestore with media I am authorized to retain.</span></label></div></article>
+        <article class="panel credits-panel"><div class="panel-heading"><div><span class="section-kicker">OPEN SOURCE & ATTRIBUTION</span><h3>Built on community tools</h3></div><span class="license-pill">MIT PROJECT</span></div><div class="credit-row"><div><b>Exoprobe</b><small>Reads ExoPlayer cache indexes and rejoins cached media.</small></div><a href="#" id="open-exoprobe" class="external-link">GitHub ↗</a></div><div class="credit-row"><div><b>FFmpeg</b><small>Audio extraction and MP3 conversion.</small></div><a href="#" id="open-ffmpeg" class="external-link">Project ↗</a></div><div class="credit-row"><div><b>Electron, yauzl, sql.js & music-metadata</b><small>Desktop runtime, ZIP extraction, SQLite access and local audio tags.</small></div><span class="text-muted">See THIRD_PARTY_NOTICES.md</span></div><div class="credit-row"><div><b>Noctis considered, not bundled</b><small>Noctis is a standalone Avalonia/C# music player, not an embeddable Electron component. SimpRestore uses its own lightweight local player so recovery and playback stay in one app.</small></div><a href="#" id="open-noctis" class="external-link">GitHub ↗</a></div><div class="creator-note">Created by <b>Mohammed Hamed</b> · AI-assisted / vibe-coded · Independent community project</div><div class="creator-links"><a href="https://www.linkedin.com/in/mohammed-hamed-2007-space/" id="open-linkedin" class="creator-link creator-link-muted">Connect on LinkedIn <span>↗</span></a><a href="https://ko-fi.com/mohammed_hamed01" id="open-kofi" class="creator-link creator-link-support">Support the project on Ko-fi <span>♥</span></a></div></article>
+      </section>
+
+      <footer class="app-footer"><span>© <span id="footer-year">2026</span> SimpRestore · Created by Mohammed Hamed</span><span><i></i> Local-first by design <b>·</b> No cloud upload</span></footer>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+  <div class="welcome-backdrop" id="welcome-modal" hidden><section class="welcome-card"><div class="welcome-brand"><div class="brand-mark"><span class="brand-glyph">S</span><span class="brand-spark"></span></div><span>WELCOME TO SIMPRESTORE</span></div><h2>Restore thoughtfully.<br /><em>Listen locally.</em></h2><p class="welcome-lede">A simple offline utility for organizing your SimpMusic backups and your own local audio files.</p><div class="welcome-steps"><div><span>01</span><p>Back up in SimpMusic: <b>Settings → Backup → Backup Your Data / Save all your Playlist data</b>.</p></div><div><span>02</span><p>Choose the <code>.backup</code> file and a library folder. Reuse that same folder for future backups.</p></div><div><span>03</span><p>Let recovery finish. Large backups may take several minutes; progress will update during extraction and conversion.</p></div></div><div class="welcome-ethics"><b>Responsible and ethical use</b><p>SimpRestore does not provide music or grant permission to copy it. The author does not encourage piracy or unauthorized sharing. Only recover, convert, or keep media you created, own, or have clear permission to retain. If you are unsure, do not process or share it. Respect artists, rights holders, applicable laws, and service terms. You are responsible for your use; this notice cannot guarantee that a particular use is lawful or ethically appropriate. SimpRestore is independent and unaffiliated with SimpMusic, YouTube, or YouTube Music.</p><label><input id="welcome-ethics-check" type="checkbox"><span class="fake-check"></span><span>I have read this notice and will only use SimpRestore with media I am authorized to retain.</span></label></div><div class="welcome-actions"><button class="button-primary wide" id="welcome-continue" disabled>Continue to SimpRestore <span>→</span></button></div><div class="welcome-author">Created by Mohammed Hamed · AI-assisted / vibe-coded</div><div class="welcome-links"><a href="https://www.linkedin.com/in/mohammed-hamed-2007-space/" id="welcome-linkedin">Creator: LinkedIn ↗</a><a href="https://ko-fi.com/mohammed_hamed01" id="welcome-kofi">Support on Ko-fi ♥</a></div></section></div>
+  <script src="renderer.js"></script>
+</body>
+</html>

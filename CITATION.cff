@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use or reference SimpRestore, please cite this project."
+title: "SimpRestore"
+type: software
+authors:
+  - family-names: Hamed
+    given-names: Mohammed
+year: 2026
+version: 0.2.2
+license: MIT
+abstract: "An offline-first Windows utility for organizing authorized SimpMusic backups, recovering cached media, maintaining an incremental local music library, and playing local audio."
