@@ -1,0 +1,71 @@
+name: Build Windows app
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Prepare offline tools
+        run: npm run prepare:tools
+
+      - name: Build installer and portable app
+        run: npx electron-builder --win nsis portable --publish never
+
+      - name: Attach third-party notices and FFmpeg audit data
+        shell: pwsh
+        run: |
+          Copy-Item vendor/FFMPEG-LICENSE.txt release/FFMPEG-LICENSE.txt
+          Copy-Item vendor/FFMPEG-BUILD-INFO.txt release/FFMPEG-BUILD-INFO.txt
+          Copy-Item THIRD_PARTY_NOTICES.md release/THIRD_PARTY_NOTICES.md
+
+      - name: Upload Windows installer and portable app for testing
+        uses: actions/upload-artifact@v4
+        with:
+          name: SimpRestore-Windows-${{ github.ref_name }}
+          path: |
+            release/*.exe
+            release/FFMPEG-LICENSE.txt
+            release/FFMPEG-BUILD-INFO.txt
+            release/THIRD_PARTY_NOTICES.md
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish GitHub Release on version tags after license review
+        if: startsWith(github.ref, 'refs/tags/v') && vars.ALLOW_RELEASE_PUBLISH == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: SimpRestore ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            release/*.exe
+            release/FFMPEG-LICENSE.txt
+            release/FFMPEG-BUILD-INFO.txt
+            release/THIRD_PARTY_NOTICES.md
+          body: |
+            ## SimpRestore ${{ github.ref_name }}
+
+            Windows installer and portable build. The app is designed to work offline after installation.
+
+            **Responsible use:** Use only with media you own or are authorized to access. SimpRestore is an independent project and is not affiliated with SimpMusic, YouTube, or YouTube Music. See the repository README and third-party notices.
